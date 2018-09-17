@@ -2,7 +2,6 @@ from django.core.paginator import Paginator
 from django.shortcuts import render, get_object_or_404
 from django.http import HttpResponse
 from qa.models import Question
-from django.core.urlresolvers import reverse
 
 def new_questions(request):
     questions = Question.objects.new()
@@ -12,7 +11,6 @@ def new_questions(request):
     except ValueError:
         raise Http404
     paginator = Paginator(questions, limit)
-    paginator.baseurl = reverse('ask', )
     try:
         page = paginator.page(page)
     except EmptyPage:

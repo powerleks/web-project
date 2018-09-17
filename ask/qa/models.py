@@ -1,5 +1,7 @@
 from django.contrib.auth.models import User
+from django.core.urlresolvers import reverse
 from django.db import models
+
 
 class QuestionManager(models.Manager):
     def popular(self):
@@ -33,7 +35,7 @@ class Question(models.Model):
     text = models.TextField()
     added_at = models.DateTimeField(blank=True, auto_now_add=True)
     rating = models.IntegerField(default=0)
-    author = models.ForeignKey(User, on_delete=models.CASCADE)
+    author = models.ForeignKey(User, on_delete=models.CASCADE, related_name='answer_set')
     likes = models.ManyToManyField(User, related_name='likes_set')
     objects = QuestionManager()
 

@@ -19,7 +19,7 @@
                     <b>{{ question.title }}</b> 
                     <!-- <span style="float: right">{{ query.date|date:"d.m.Y" }} {{ query.date|time:"H:i" }}</span> -->
                 </div>
-                <div class="card-body"><a href="{% url 'ask' question.id %}">{% url 'ask' question.id %}</a></div>
+                <div class="card-body"><a href="{% url 'question' question.id %}">{% url 'question' question.id %}</a></div>
             </div>
             <br/>
         {% endfor %}
