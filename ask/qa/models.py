@@ -39,8 +39,16 @@ class Question(models.Model):
     likes = models.ManyToManyField(User, related_name='likes_set')
     objects = QuestionManager()
 
+    def get_url(self):
+        return reverse('question',
+            kwargs={'id': self.id})
+
 class Answer(models.Model):
     text = models.TextField()
     added_at = models.DateTimeField(blank=True, auto_now_add=True)
     question = models.ForeignKey(Question, on_delete=models.CASCADE)
     author = models.ForeignKey(User, on_delete=models.CASCADE, related_name='%(class)s_requests_created')
+
+    def get_url(self):
+        return reverse('question',
+            kwargs={'id': self.question.id})

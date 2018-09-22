@@ -1,4 +1,5 @@
 from django import forms
+from django.contrib.auth.models import User
 from qa.models import Answer, Question
 
 class AskForm(forms.Form):
@@ -6,11 +7,8 @@ class AskForm(forms.Form):
     text = forms.CharField(widget=forms.Textarea)
 
     # def clean(self):
-    #     if is_spam(self.clean_data):
-    #         raise forms.ValidationError(
-    #         'Сообщение похоже на спам',
-    #         code='spam'
-    #     )
+    #     random_user = User.objects.first()
+    #     self.cleaned_data['author'] = random_user
 
     def save(self):
         question = Question(**self.cleaned_data)
@@ -18,20 +16,17 @@ class AskForm(forms.Form):
         return question
 
 class AnswerForm(forms.Form):
-    # title = forms.CharField(max_length=100)
-    # question = forms.CharField(widget=forms.Textarea)
-    class Meta:
-        model = Answer
-        fields = ['text', 'question']
+    text = forms.CharField(widget=forms.Textarea)
+    choices = (
+        ('Question', 'Question'),
+    )
+    question = forms.ChoiceField(choices=choices)
 
     # def clean(self):
-    #     if is_spam(self.clean_data):
-    #         raise forms.ValidationError(
-    #         'Сообщение похоже на спам',
-    #         code='spam'
-    #     )
+    #     random_user = User.objects.first()
+    #     self.cleaned_data['author'] = random_user
 
-    # def save(self):
-    #     question = Question(**self.cleaned_data)
-    #     question.save()
-    #     return question
+    def save(self):
+        answer = Answer(**self.cleaned_data)
+        answer.save()
+        return answer
