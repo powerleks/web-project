@@ -79,6 +79,8 @@ def signup(request):
         password = request.POST['password']
         user = User.objects.create_user(username, email, password)
         user.save()
+        user = authenticate(username=username, password=password)
+        login(request, user)
         return HttpResponseRedirect('/')
     else:
         form = SignupForm()
